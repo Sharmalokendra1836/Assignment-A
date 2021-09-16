@@ -48,7 +48,7 @@ public class VerifyAccountIdAndAccountType {
             openAccountPage.clickOnOpenNewAccountButton();
             Thread.sleep(2000);
             newCheckingAccountID = openAccountPage.getNewAccountIdTest();
-            System.out.println("Acount Id"+ newCheckingAccountID);
+            System.out.println("Acount Id" + newCheckingAccountID);
             openAccountPage.clickOnNewAccountCreated();
             Thread.sleep(1000);
 
@@ -79,7 +79,7 @@ public class VerifyAccountIdAndAccountType {
             openAccountPage.clickOnOpenNewAccountButton();
             Thread.sleep(2000);
             newSavingsAccountID = openAccountPage.getNewAccountIdTest();
-            System.out.println("Acount Id"+ newSavingsAccountID);
+            System.out.println("Acount Id" + newSavingsAccountID);
             openAccountPage.clickOnNewAccountCreated();
             Thread.sleep(1000);
 
@@ -88,9 +88,7 @@ public class VerifyAccountIdAndAccountType {
             Assert.assertEquals(newSavingsAccountID, accountIDInADPage);
             Assert.assertEquals(savingsAccountText, accountTypeInADPage);
         }
-
     }
-
 
     @Test(priority = 2)
     public void verifyBillPayAccount() throws InterruptedException {
@@ -110,8 +108,9 @@ public class VerifyAccountIdAndAccountType {
 
         System.out.println(newSavingsAccountID);
         billPayPage.selectFromAccountId(newSavingsAccountID);
+        Thread.sleep(3000);
         billPayPage.clickOnSendPayment();
-
+        Thread.sleep(4000);
 
         AccountDetailPage accountDetailPage = new AccountDetailPage(webDriver);
         accountDetailPage.clickOnAccountOverviewPage();
@@ -139,7 +138,11 @@ public class VerifyAccountIdAndAccountType {
         accountDetailPage.clickOnCheckingAccountId(newSavingsAccountID);
         Thread.sleep(5000);
         String debiter = accountDetailPage.getBalanceText();
+        System.out.println(debiter);
         String debiterAvailable = accountDetailPage.getBalanceText();
+        System.out.println(debiterAvailable);
+
+
         Assert.assertEquals(debiter, "$0.00");
         Assert.assertEquals(debiterAvailable, "$0.00");
 
