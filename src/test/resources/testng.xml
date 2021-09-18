@@ -2,7 +2,7 @@
 <suite name="Example test run">
     <test name="Simple Test">
         <classes>
-            <class name="com.com.pb.testcases.VerifyAccountIdAndAccountType"/>
+            <class name="com.pb.testcases.VerifyAccountIdAndAccountType"/>
         </classes>
     </test>
 </suite>

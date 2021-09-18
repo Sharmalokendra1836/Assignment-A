@@ -1,18 +1,22 @@
 package com.sample;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
+
 public class SampleMain {
     static String newCheckingAccountID = "";
     static String newSavingAccountID = "";
-
+    static String checkedInitialBalance = "";
+    static String savingsInitialBalance = "";
+    static WebDriver webDriver = new ChromeDriver();
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Bholenath\\Downloads\\seleniumexample\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.get("https://parabank.parasoft.com/parabank/index.htm");
@@ -21,25 +25,28 @@ public class SampleMain {
         webDriver.findElement(By.xpath("//input[@name='username']")).sendKeys("john");
         webDriver.findElement(By.xpath("//input[@name='password']")).sendKeys("demo");
         webDriver.findElement(By.xpath("//input[@value='Log In']")).click();
+        Thread.sleep(4000);
 
+        takeScreenshot("Login");
         webDriver.findElement(By.xpath("//a[normalize-space()='Open New Account']")).click();
 
         String checking = webDriver.findElement(By.xpath("//option[@value='0']")).getText();
         System.out.println(checking);
         Thread.sleep(3000);
-        String accountID = webDriver.findElement(By.xpath("//option[@value='12345']")).getText();
+        String accountID = webDriver.findElement(By.xpath("(//select[@id='fromAccountId']/option)[1]")).getText();
 
         System.out.println(accountID);
         String CHECKING = "CHECKING";
         String ACCOUNT_ID = "12345";
 
-        if (CHECKING.equals(checking) && ACCOUNT_ID.equals(accountID)) {
+        if (CHECKING.equals(checking)) {
             Thread.sleep(3000);
             webDriver.findElement(By.xpath("//input[@value='Open New Account']")).click();
             Thread.sleep(2000);
             newCheckingAccountID = webDriver.findElement(By.xpath("//a[@id='newAccountId']")).getText();
             webDriver.findElement(By.xpath("//a[@id='newAccountId']")).click();
             Thread.sleep(1000);
+            checkedInitialBalance = webDriver.findElement(By.id("balance")).getText();
             Thread.sleep(1000);
             System.out.println(webDriver.getTitle());
 
@@ -64,19 +71,20 @@ public class SampleMain {
         String saving = webDriver.findElement(By.xpath("//option[@value='1']")).getText();
         System.out.println(saving);
         Thread.sleep(3000);
-        String savingAccountId = webDriver.findElement(By.xpath("//option[@value='12345']")).getText();
+        String savingAccountId = webDriver.findElement(By.xpath("(//select[@id='fromAccountId']/option)[1]")).getText();
 
         System.out.println(savingAccountId);
         String SAVINGS = "SAVINGS";
         String SAVING_ACCOUNT_ID = "12345";
 
-        if (SAVINGS.equals(saving) && SAVING_ACCOUNT_ID.equals(savingAccountId)) {
+        if (SAVINGS.equals(saving)) {
             Thread.sleep(3000);
             webDriver.findElement(By.xpath("//input[@value='Open New Account']")).click();
             Thread.sleep(2000);
             newSavingAccountID = webDriver.findElement(By.xpath("//a[@id='newAccountId']")).getText();
             webDriver.findElement(By.xpath("//a[@id='newAccountId']")).click();
             Thread.sleep(1000);
+            savingsInitialBalance = webDriver.findElement(By.id("balance")).getText();
             Thread.sleep(1000);
             System.out.println(webDriver.getTitle());
 
@@ -99,7 +107,10 @@ public class SampleMain {
             webDriver.findElement(By.name("payee.phoneNumber")).sendKeys("9876543210");
             webDriver.findElement(By.name("payee.accountNumber")).sendKeys(newCheckingAccountID);
             webDriver.findElement(By.name("verifyAccount")).sendKeys(newCheckingAccountID);
-            webDriver.findElement(By.name("amount")).sendKeys("100");
+
+
+
+            webDriver.findElement(By.name("amount")).sendKeys("200");
 
             Select fromAccountId = new Select(webDriver.findElement(By.name("fromAccountId")));
             fromAccountId.selectByValue(newSavingAccountID);
@@ -119,11 +130,10 @@ public class SampleMain {
         Thread.sleep(5000);
         String receiver = webDriver.findElement(By.id("balance")).getText();
         String receiverAvailable = webDriver.findElement(By.id("balance")).getText();
-        Assert.assertEquals(receiver, "$100.00");
-        Assert.assertEquals(receiverAvailable, "$100.00");
+        Assert.assertEquals(receiver, checkedInitialBalance);
+        Assert.assertEquals(receiverAvailable, checkedInitialBalance);
 
         Thread.sleep(5000);
-
 
         //debiter
         webDriver.findElement(By.xpath("//a[normalize-space()='Accounts Overview']")).click();
@@ -135,10 +145,23 @@ public class SampleMain {
         Thread.sleep(5000);
         String debiter = webDriver.findElement(By.id("balance")).getText();
         String debiterAvailable = webDriver.findElement(By.id("balance")).getText();
-        Assert.assertEquals(debiter, "$0.00");
-        Assert.assertEquals(debiterAvailable, "$0.00");
+        String value = savingsInitialBalance.replace("$", "");
+        System.out.println(value);
+//        Assert.assertEquals(debiter, "$50.00");
+//        Assert.assertEquals(debiterAvailable, "$50.00");
 
-        Thread.sleep(5000);
-        webDriver.quit();
+        System.out.println("Closing browser");
+        webDriver.close();
+    }
+
+    public static void takeScreenshot(String locator) {
+        File src = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+        File des = new File("./Results/Screenshots/"+" "+"_" + "sample.jpeg");
+        try{
+            FileUtils.copyFile(src,des);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

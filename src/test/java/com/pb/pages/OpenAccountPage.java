@@ -13,7 +13,7 @@ public class OpenAccountPage {
     By accountType = By.id("type");
     By checkingAccount = By.xpath("//option[@value='0']");
     By savingsAccount = By.xpath("//option[@value='1']");
-    By accountIdDefault = By.xpath("//option[@value='12345']");
+    By accountIdDefault = By.xpath("(//select[@id='fromAccountId']/option)[1]");
     By newAcountId = By.xpath("//a[@id='newAccountId']");
     By accountIdInPageDetails = By.xpath("//td[@id='accountId']");
     By accountTypeInPageDetails = By.xpath("//td[@id='accountType']");
@@ -43,14 +43,6 @@ public class OpenAccountPage {
     }
 
 
-  /*  public String getCheckingAccountText() {
-        return webDriver.findElement(newCheckingAccountID).getText();
-    }
-
-*/
-    public void clickOnNewCheckingAccountCreatedLink(){
-        webDriver.findElement(newAcountId).click();
-    }
     public String getSavingsAccountText() {
         return webDriver.findElement(savingsAccount).getText();
     }
@@ -70,11 +62,6 @@ public class OpenAccountPage {
     public void clickOnNewAccountCreated(){
         webDriver.findElement(newAcountId).click();
     }
-  /*  public void openCheckingAccount() {
-        Select selectAccount = new Select(webDriver.findElement(openNewAccount));
-        selectAccount.selectByValue("0");
-
-    }*/
 
     public void openSavingsAccount() {
         Select selectAccount = new Select(webDriver.findElement(accountType));
