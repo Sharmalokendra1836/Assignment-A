@@ -33,43 +33,31 @@ public class BillPayPage {
 
     public void sendPayeeName() {
         webDriver.findElement(payeeName).sendKeys("checkabc");
-
     }
 
     public void sendPayeeAddress() {
         webDriver.findElement(payeeAddress).sendKeys("checkabc");
-
     }
 
     public void sendPayeeCity() {
         webDriver.findElement(payeeCity).sendKeys("checkabc");
-
-
     }
 
     public void sendPayeeState() {
         webDriver.findElement(payeeState).sendKeys("checkabc");
-
-
     }
 
     public void sendPayeeZipCode() {
         webDriver.findElement(payeeZipCode).sendKeys("411000");
-
-
     }
 
     public void sendPayeephoneNumber() {
         webDriver.findElement(payeePhoneNumber).sendKeys("9876543210");
-
-
     }
 
     public void sendAccountNumber(String newCheckingAccountID) {
         webDriver.findElement(payeeAccountNumber).sendKeys(newCheckingAccountID);
         webDriver.findElement(verifyAccount).sendKeys(newCheckingAccountID);
-
-
     }
 
     public void sendAmmount() {
