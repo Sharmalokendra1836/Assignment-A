@@ -1,5 +1,6 @@
 package com.pb.testcases;
 
+import com.pb.Util;
 import com.pb.pages.AccountDetailPage;
 import com.pb.pages.BillPayPage;
 import com.pb.pages.LoginPage;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static com.pb.Util.*;
 
 public class VerifyAccountIdAndAccountType {
     WebDriver webDriver = new ChromeDriver();
@@ -41,18 +44,18 @@ public class VerifyAccountIdAndAccountType {
         Thread.sleep(1000);
         String checkingAccountText = openAccountPage.getCheckingAccountText();
         String CHECKING = "CHECKING";
-
+        takeScreenshot(webDriver,"AccountType");
         if (CHECKING.equals(checkingAccountText)) {
             openAccountPage.clickOnOpenNewAccountButton();
             Thread.sleep(2000);
             newCheckingAccountID = openAccountPage.getNewAccountIdTest();
-            System.out.println("Acount Id" + newCheckingAccountID);
             openAccountPage.clickOnNewAccountCreated();
             Thread.sleep(1000);
             checkedInitialBalance = webDriver.findElement(By.id("balance")).getText();
 
             String accountIDInADPage = openAccountPage.getAcccountIdInADPage();
             String accountTypeInADPage = openAccountPage.getAcccountTypeInADPage();
+            takeScreenshot(webDriver,"Account_Checked_Overview");
             Assert.assertEquals(newCheckingAccountID, accountIDInADPage);
             Assert.assertEquals(checkingAccountText, accountTypeInADPage);
         }
@@ -71,13 +74,13 @@ public class VerifyAccountIdAndAccountType {
             openAccountPage.clickOnOpenNewAccountButton();
             Thread.sleep(2000);
             newSavingsAccountID = openAccountPage.getNewAccountIdTest();
-            System.out.println("Acount Id" + newSavingsAccountID);
             openAccountPage.clickOnNewAccountCreated();
             Thread.sleep(1000);
             savingsInitialBalance = webDriver.findElement(By.id("balance")).getText();
 
             String accountIDInADPage = openAccountPage.getAcccountIdInADPage();
             String accountTypeInADPage = openAccountPage.getAcccountTypeInADPage();
+            takeScreenshot(webDriver,"Account_Savings_Overview");
             Assert.assertEquals(newSavingsAccountID, accountIDInADPage);
             Assert.assertEquals(savingsAccountText, accountTypeInADPage);
         }
@@ -99,9 +102,9 @@ public class VerifyAccountIdAndAccountType {
         billPayPage.sendAmmount();
 
         billPayPage.selectFromAccountId(newSavingsAccountID);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         billPayPage.clickOnSendPayment();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         AccountDetailPage accountDetailPage = new AccountDetailPage(webDriver);
         accountDetailPage.clickOnAccountOverviewPage();
@@ -111,13 +114,14 @@ public class VerifyAccountIdAndAccountType {
         JavascriptExecutor js = (JavascriptExecutor) webDriver;
         js.executeScript("window.scrollBy(0,1000)");
         accountDetailPage.clickOnCheckingAccountId(newCheckingAccountID);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         String receiver = accountDetailPage.getBalanceText();
         String receiverAvailable = accountDetailPage.getBalanceText();
+        takeScreenshot(webDriver,"After_Bill_Pay_Account_Checked_Overview");
         Assert.assertEquals(receiver, savingsInitialBalance);
         Assert.assertEquals(receiverAvailable, savingsInitialBalance);
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         //debiter
         accountDetailPage.clickOnAccountOverviewPage();
@@ -125,18 +129,16 @@ public class VerifyAccountIdAndAccountType {
 
         js.executeScript("window.scrollBy(0,1000)");
         accountDetailPage.clickOnCheckingAccountId(newSavingsAccountID);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         String debiter = accountDetailPage.getBalanceText();
-        System.out.println(debiter);
         String debiterAvailable = accountDetailPage.getBalanceText();
-        System.out.println(debiterAvailable);
-
+        takeScreenshot(webDriver,"After_Bill_Pay_Account_Savings_Overview");
 
         Assert.assertEquals(debiter, "$0.00");
         Assert.assertEquals(debiterAvailable, "$0.00");
 
         webDriver.findElement(By.xpath("//a[text()='Log Out']")).click();
-        System.out.println("Closing browser");
+        takeScreenshot(webDriver,"LogOut");
         webDriver.quit();
 
     }

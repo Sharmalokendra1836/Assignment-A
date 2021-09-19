@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Util {
     public static void takeScreenshot(WebDriver webDriver,String locator) {
         File src = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-        File des = new File("./Results/Screenshots/"+" "+"_" + "sample.jpeg");
+        File des = new File("./Results/Screenshots/"+" "+"_" +locator+ ".jpeg");
         try{
             FileUtils.copyFile(src,des);
         } catch (IOException e) {
