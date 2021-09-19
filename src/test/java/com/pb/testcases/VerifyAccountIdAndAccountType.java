@@ -42,11 +42,8 @@ public class VerifyAccountIdAndAccountType {
 
         OpenAccountPage openAccountPage = new OpenAccountPage(webDriver);
         openAccountPage.clickOnOpenNewAccountLeftSide();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         String checkingAccountText = openAccountPage.getCheckingAccountText();
-
-        String defaultAccountIdText = openAccountPage.getDefaultAccountIdText();
-
         String CHECKING = "CHECKING";
 
         if (CHECKING.equals(checkingAccountText)) {
@@ -70,13 +67,8 @@ public class VerifyAccountIdAndAccountType {
         OpenAccountPage openAccountPage = new OpenAccountPage(webDriver);
         openAccountPage.clickOnOpenNewAccountLeftSide();
         Thread.sleep(3000);
-
         openAccountPage.openSavingsAccount();
-
         String savingsAccountText = openAccountPage.getSavingsAccountText();
-
-        String defaultAccountIdText = openAccountPage.getDefaultAccountIdText();
-
         String SAVINGS = "SAVINGS";
 
         if (SAVINGS.equals(savingsAccountText)) {
@@ -107,7 +99,6 @@ public class VerifyAccountIdAndAccountType {
         billPayPage.sendPayeeState();
         billPayPage.sendPayeeZipCode();
         billPayPage.sendPayeephoneNumber();
-        System.out.println(newCheckingAccountID);
         billPayPage.sendAccountNumber(newCheckingAccountID);
         billPayPage.sendAmmount();
 

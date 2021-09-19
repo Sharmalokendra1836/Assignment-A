@@ -37,7 +37,6 @@ public class SampleMain {
 
         System.out.println(accountID);
         String CHECKING = "CHECKING";
-        String ACCOUNT_ID = "12345";
 
         if (CHECKING.equals(checking)) {
             Thread.sleep(3000);
@@ -54,7 +53,6 @@ public class SampleMain {
             String accountIDInADPage = webDriver.findElement(By.xpath("//td[@id='accountId']")).getText();
             String accountTypeInADPage = webDriver.findElement(By.xpath("//td[@id='accountType']")).getText();
 
-//            Assert.assertEquals(webDriver.getTitle(),"Account Details");
             Assert.assertEquals(newCheckingAccountID, accountIDInADPage);
             Assert.assertEquals(checking, accountTypeInADPage);
 
@@ -63,8 +61,6 @@ public class SampleMain {
 
 
         webDriver.findElement(By.xpath("//a[normalize-space()='Open New Account']")).click();
-
-//        webDriver.findElement(By.xpath("//select[@id='type']")).click();
 
         Select selectAccount = new Select(webDriver.findElement(By.id("type")));
         selectAccount.selectByValue("1");
@@ -75,7 +71,6 @@ public class SampleMain {
 
         System.out.println(savingAccountId);
         String SAVINGS = "SAVINGS";
-        String SAVING_ACCOUNT_ID = "12345";
 
         if (SAVINGS.equals(saving)) {
             Thread.sleep(3000);
@@ -92,7 +87,6 @@ public class SampleMain {
             String accountIDInADPage = webDriver.findElement(By.xpath("//td[@id='accountId']")).getText();
             String accountTypeInADPage = webDriver.findElement(By.xpath("//td[@id='accountType']")).getText();
 
-//            Assert.assertEquals(webDriver.getTitle(),"Account Details");
             Assert.assertEquals(newSavingAccountID, accountIDInADPage);
             Assert.assertEquals(saving, accountTypeInADPage);
 
@@ -110,7 +104,7 @@ public class SampleMain {
 
 
 
-            webDriver.findElement(By.name("amount")).sendKeys("200");
+            webDriver.findElement(By.name("amount")).sendKeys("100");
 
             Select fromAccountId = new Select(webDriver.findElement(By.name("fromAccountId")));
             fromAccountId.selectByValue(newSavingAccountID);
@@ -147,8 +141,8 @@ public class SampleMain {
         String debiterAvailable = webDriver.findElement(By.id("balance")).getText();
         String value = savingsInitialBalance.replace("$", "");
         System.out.println(value);
-//        Assert.assertEquals(debiter, "$50.00");
-//        Assert.assertEquals(debiterAvailable, "$50.00");
+        Assert.assertEquals(debiter, "$0.00");
+        Assert.assertEquals(debiterAvailable, "$0.00");
 
         System.out.println("Closing browser");
         webDriver.close();
