@@ -9,6 +9,8 @@ import org.testng.Assert;
 import java.io.File;
 import java.io.IOException;
 
+import static com.pb.Util.takeScreenshot;
+
 public class SampleMain {
     static String newCheckingAccountID = "";
     static String newSavingAccountID = "";
@@ -27,7 +29,7 @@ public class SampleMain {
         webDriver.findElement(By.xpath("//input[@value='Log In']")).click();
         Thread.sleep(4000);
 
-        takeScreenshot("Login");
+        takeScreenshot(webDriver,"Login");
         webDriver.findElement(By.xpath("//a[normalize-space()='Open New Account']")).click();
 
         String checking = webDriver.findElement(By.xpath("//option[@value='0']")).getText();
@@ -148,14 +150,4 @@ public class SampleMain {
         webDriver.close();
     }
 
-    public static void takeScreenshot(String locator) {
-        File src = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-        File des = new File("./Results/Screenshots/"+" "+"_" + "sample.jpeg");
-        try{
-            FileUtils.copyFile(src,des);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

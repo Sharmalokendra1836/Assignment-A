@@ -42,7 +42,7 @@ public class VerifyAccountIdAndAccountType {
 
         OpenAccountPage openAccountPage = new OpenAccountPage(webDriver);
         openAccountPage.clickOnOpenNewAccountLeftSide();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         String checkingAccountText = openAccountPage.getCheckingAccountText();
         String CHECKING = "CHECKING";
 
