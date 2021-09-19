@@ -14,10 +14,10 @@ import org.testng.annotations.Test;
 public class VerifyAccountIdAndAccountType {
     WebDriver webDriver = new ChromeDriver();
 
-    static String newCheckingAccountID = "";
-    static String newSavingsAccountID = "";
-    static String checkedInitialBalance = "";
-    static String savingsInitialBalance = "";
+    String newCheckingAccountID = "";
+    String newSavingsAccountID = "";
+    String checkedInitialBalance = "";
+    String savingsInitialBalance = "";
 
     public VerifyAccountIdAndAccountType() {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
@@ -25,7 +25,7 @@ public class VerifyAccountIdAndAccountType {
     }
 
     @Test(priority = 0)
-    public void verifyNewAccountOpenForCheckings() throws InterruptedException {
+    public void verifyNewAccountOpenedForCheckings() throws InterruptedException {
 
         webDriver.manage().window().maximize();
         webDriver.get("https://parabank.parasoft.com/parabank/index.htm");
@@ -59,7 +59,7 @@ public class VerifyAccountIdAndAccountType {
     }
 
     @Test(priority = 1)
-    public void verifyNewAccountOpenForSavings() throws InterruptedException {
+    public void verifyNewAccountOpenedForSavings() throws InterruptedException {
         OpenAccountPage openAccountPage = new OpenAccountPage(webDriver);
         openAccountPage.clickOnOpenNewAccountLeftSide();
         Thread.sleep(3000);
@@ -98,7 +98,6 @@ public class VerifyAccountIdAndAccountType {
         billPayPage.sendAccountNumber(newCheckingAccountID);
         billPayPage.sendAmmount();
 
-        System.out.println(newSavingsAccountID);
         billPayPage.selectFromAccountId(newSavingsAccountID);
         Thread.sleep(2000);
         billPayPage.clickOnSendPayment();
