@@ -11,10 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
-import static com.sample.SampleMain.takeScreenshot;
-
 public class VerifyAccountIdAndAccountType {
     WebDriver webDriver = new ChromeDriver();
 
@@ -141,7 +137,6 @@ public class VerifyAccountIdAndAccountType {
         Assert.assertEquals(debiterAvailable, "$0.00");
 
         webDriver.findElement(By.xpath("//a[text()='Log Out']")).click();
-        takeScreenshot("Page Logout");
         System.out.println("Closing browser");
         webDriver.quit();
 
